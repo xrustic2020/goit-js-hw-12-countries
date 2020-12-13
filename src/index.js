@@ -1,17 +1,22 @@
 import './styles.css';
 import fetchCountries from './scripts/fetchCountries';
-
 import debounce from 'lodash.debounce';
+import countryTpl from './templates/country.hbs'
 
 const refs = {
   input: document.querySelector('.searching__input'),
+  content: document.querySelector('.content'),
 };
 
-fetchCountries('united').then(response => console.log(response));
-console.log(refs.input);
+refs.input.addEventListener('input', debounce(handler, 500));
 
-refs.input.addEventListener('input', handler);
+function handler(evt) {
+  const value = evt.target.value;
+  fetchCountries(`${value}`).then(response => {
+    console.log(countryTpl(response));
+    refs.content.innerHTML = countryTpl(response);
 
-function handler() { 
-  console.log(refs.input.value);
+  });
 };
+
+// console.log(refs.content);
