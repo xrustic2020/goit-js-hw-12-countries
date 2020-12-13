@@ -1,6 +1,8 @@
 import './styles.css';
 import fetchCountries from './scripts/fetchCountries';
 
+import debounce from 'lodash.debounce';
+
 const refs = {
   input: document.querySelector('.searching__input'),
 };
